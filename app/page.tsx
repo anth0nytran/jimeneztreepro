@@ -760,17 +760,24 @@ export default function ThreeDFencing() {
         </div>
       </section>
 
-      <footer className="py-6 text-xs" style={{ borderTop: `1px solid ${t.border}`, color: t.textMuted }}>
-        <div className={`${shellClass} flex flex-col gap-3 md:flex-row md:items-center md:justify-between`}>
-          <div className="flex flex-col gap-1 md:flex-row md:items-center md:gap-4">
-            <span className="font-semibold" style={{ color: t.textPrimary }}>{config.businessName}</span>
-            <span>Serving Houston, Katy, The Woodlands & More</span>
-            <span>Open 24/7 | (281) 748-1111</span>
+      <footer className="py-8 mt-12" style={{ borderTop: `1px solid ${t.border}` }}>
+        <div className={`${shellClass} flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left`}>
+
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-center md:justify-start gap-3 text-xs font-bold" style={{ color: t.textPrimary }}>
+              <span>{config.businessName}</span>
+              <span className="opacity-30">|</span>
+              <span>(281) 748-1111</span>
+            </div>
+            <p className="text-[11px] leading-relaxed max-w-lg opacity-60" style={{ color: t.textMuted }}>
+              Proudly serving Houston, Katy, The Woodlands, Sugar Land, Cypress, Missouri City, Richmond, and surrounding areas in Texas.
+            </p>
           </div>
-          <a href="https://quicklaunchweb.us" className="flex items-center gap-1.5 text-[10px] opacity-60 hover:opacity-100 transition-opacity">
-            <span>Website by</span>
-            <span className="font-bold" style={{ color: accent }}>QuickLaunchWeb</span>
+
+          <a href="https://quicklaunchweb.us" target="_blank" rel="noopener noreferrer" className="text-[10px] font-semibold opacity-40 hover:opacity-100 transition-opacity uppercase tracking-wider" style={{ color: t.textSecondary }}>
+            Website by QuickLaunchWeb
           </a>
+
         </div>
       </footer>
 

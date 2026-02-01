@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://3dfencehouston.com'),
-  title: "3D Fence & Welding | Houston's Experts in Fencing & Automatic Gates",
-  description: "Premier Houston fence contractor specializing in custom driveway gates, automatic gate openers, wood privacy fences, and professional welding fabrication. 15+ years of quality service. Call (281) 748-1111 for a free estimate today.",
+  title: "3D Fence & Welding | Houston Fence Installation & Custom Gates | (281) 748-1111",
+  description: "Houston's trusted fence company for 15+ years. Cedar fence installation, custom iron gates, automatic driveway gates & LiftMaster openers. Serving Katy, The Woodlands, Sugar Land. Free estimates!",
   keywords: ["Fence Installation Houston", "Driveway Gates", "Automatic Gate Openers", "Wrought Iron Fences", "Cedar Fencing", "Welding Services Houston", "Fence Repair"],
   openGraph: {
     title: "3D Fence & Welding | Houston's Experts in Fencing & Automatic Gates",
@@ -65,6 +65,7 @@ export default function RootLayout({
               "@id": "https://3dfencehouston.com",
               "url": "https://3dfencehouston.com",
               "telephone": "+12817481111",
+              "description": "Houston's trusted fence company for 15+ years. Cedar fence installation, custom iron gates, automatic driveway gates & LiftMaster openers.",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "Houston Area",
@@ -78,6 +79,37 @@ export default function RootLayout({
                 "latitude": 29.7604,
                 "longitude": -95.3698
               },
+              "areaServed": [
+                {
+                  "@type": "City",
+                  "name": "Houston",
+                  "@id": "https://en.wikipedia.org/wiki/Houston"
+                },
+                {
+                  "@type": "City",
+                  "name": "Katy"
+                },
+                {
+                  "@type": "City",
+                  "name": "The Woodlands"
+                },
+                {
+                  "@type": "City",
+                  "name": "Sugar Land"
+                },
+                {
+                  "@type": "City",
+                  "name": "Cypress"
+                },
+                {
+                  "@type": "City",
+                  "name": "Missouri City"
+                },
+                {
+                  "@type": "City",
+                  "name": "Richmond"
+                }
+              ],
               "openingHoursSpecification": {
                 "@type": "OpeningHoursSpecification",
                 "dayOfWeek": [
@@ -95,7 +127,53 @@ export default function RootLayout({
               "sameAs": [
                 "https://www.google.com/search?q=3D+Fence+%26+Welding+Houston"
               ],
-              "priceRange": "$$"
+              "priceRange": "$$",
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5.0",
+                "reviewCount": "48"
+              },
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Fence and Gate Services",
+                "itemListElement": [
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Fence Installation & Custom Gates"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Automatic Driveway Gates"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Electric Gate Openers"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Commercial & Residential Welding"
+                    }
+                  },
+                  {
+                    "@type": "Offer",
+                    "itemOffered": {
+                      "@type": "Service",
+                      "name": "Fence Repair & Maintenance"
+                    }
+                  }
+                ]
+              }
             })
           }}
         />
