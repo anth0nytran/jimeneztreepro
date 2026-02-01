@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, type FormEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, ShieldCheck, Star, Menu, X, Award, Clock, Check, ClipboardList, Hammer, ArrowRight } from 'lucide-react';
 
@@ -12,12 +12,12 @@ const config = {
   businessName: '3D Fence & Welding',
   city: 'Houston, TX',
   phone: '(281) 748-1111',
-  primaryService: 'Fence & Gate Installation',
-  services: ['Custom Driveway Gates', 'Gate Access Control', 'Welding & Fabrication', 'Fence Repair'],
+  primaryService: 'Fence Installation & Custom Gates',
+  services: ['Automatic Driveway Gates', 'Electric Gate Openers', 'Commercial & Residential Welding', 'Fence Repair & Maintenance'],
   rating: 5.0,
   reviewCount: 48,
   yearsInBusiness: 15,
-  ctaPrimary: 'Request a Quote',
+  ctaPrimary: 'Get a Free Estimate',
 
   // Theme: Clean Modern
   theme: {
@@ -52,39 +52,65 @@ const config = {
 
   testimonials: [
     {
-      quote: 'Clear estimate, answered all my questions, completed the project on schedule… workmanship is top-notch.',
-      name: 'Michael R.',
+      quote: 'I had an excellent experience with David. His team was professional from start to finish, providing a clear estimate, answering all my questions, and completing the project on schedule. The workmanship is top-notch, and the finished fence looks outstanding. I appreciate their attention to detail and the pride they take in their work. I would gladly recommend them to anyone in need of a quality fence.',
+      name: 'Gustavo Dominguez',
+      highlight: 'Workmanship is top-notch, and the finished fence looks outstanding.',
     },
     {
-      quote: 'Went above and beyond… beautifully crafted cedar fence with high-quality welded dog windows.',
-      name: 'Sarah T.',
+      quote: 'They do great work and on time. David the owner walked us through the whole process and the project came out great. Highly recommended',
+      name: 'Mike Ta',
+      highlight: 'They do great work and on time. Highly recommended.',
     },
     {
-      quote: 'Great work and on time… walked us through the whole process.',
-      name: 'David L.',
+      quote: 'David and crew were very pleasant to work with. He gave me a very fair quote and worked all day until he finished the job, which was just too difficult for me to handle. I will be calling him again for more jobs.',
+      name: 'Jim',
+      highlight: 'Gave me a very fair quote and worked all day until he finished the job.',
     },
     {
-      quote: 'Very fair quote… worked all day until he finished the job.',
-      name: 'Jennifer M.',
+      quote: 'I contacted 3D Fence & Welding for a basic fence estimate, and during our conversation I learned they also offered welding services. I asked if they could create doggie windows for my pittie. David and crew went above and beyond, transforming a simple project into a beautifully crafted cedar wood fence with high-quality welded dog windows. The workmanship is excellent, and the customer service stood out most of all. David truly listened to my vision and brought it to life. Highly recommend and my pittie is happy too 🙂',
+      name: 'Samantha Rodriguez',
+      highlight: 'Beautifully crafted cedar wood fence with high-quality welded dog windows.',
+    },
+    {
+      quote: 'Great and quality work. When we called back for addressing issue, David came and fix them.',
+      name: 'Astra Code',
+      highlight: 'Great and quality work.',
+    },
+    {
+      quote: 'very good communication and does good work.',
+      name: 'Rene Ortiz',
+      highlight: 'Very good communication and does good work.',
     },
   ],
 
   faqs: [
     {
-      q: 'Do you offer free estimates?',
-      a: 'Yes. We provide clear, written estimates after a quick walkthrough of your property.',
+      q: 'How much does a new fence cost? Do you provide free estimates?',
+      a: 'We provide 100% free, detailed written estimates. Pricing depends on materials and footage, but we offer widespread options from budget-friendly pine to premium cedar and iron.',
     },
     {
-      q: 'What areas do you serve?',
-      a: 'We serve Houston and the surrounding areas for both residential and commercial projects.',
+      q: 'Do you service my neighborhood in Houston?',
+      a: 'We serve all of Houston and surrounding areas including Katy, The Woodlands, Sugar Land, and Cypress for both residential and commercial projects.',
     },
     {
-      q: 'Do you install gate operators?',
-      a: 'Yes, we specialize in LiftMaster gate operators and access control systems for driveways.',
+      q: 'Can you add an automatic opener to my existing driveway gate?',
+      a: 'Yes, we specialize in retrofitting existing gates with LiftMaster operators and solar-powered access systems, as long as the gate structure is sound.',
     },
     {
-      q: 'What types of fences do you build?',
-      a: 'We work with cedar wood, chain link, wrought iron, and ranch-style fencing.',
+      q: 'What is better for privacy: Cedar wood or Wrought Iron?',
+      a: 'For privacy, Cedar is superior as it creates a solid visual barrier. Wrought iron is best for security and curb appeal without blocking the view.',
+    },
+    {
+      q: 'How fast can you get the job done?',
+      a: 'Most residential projects are completed in 1-3 days depending on linear footage and complexity. We provide a specific timeline with every estimate.',
+    },
+    {
+      q: 'Do you handle the HOA paperwork and City Permits for me?',
+      a: 'Yes. We provide all necessary specs, drawings, and photos for your HOA application. We also handle city permitting for projects that require it.',
+    },
+    {
+      q: 'My fence is leaning—do you do repairs or just new installs?',
+      a: 'We offer comprehensive repair services including storm damage fixes, gate adjustments, post replacement, and rot board repair for wood, iron, and chain link fences.',
     },
   ],
 };
@@ -122,6 +148,9 @@ export default function ThreeDFencing() {
   const shellClass = 'mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-10 xl:px-12 2xl:max-w-[1400px] 2xl:px-16';
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [formError, setFormError] = useState('');
+  const [pageUrl, setPageUrl] = useState('');
 
   // Smooth scroll to the quote form in the hero section
   const scrollToQuote = () => {
@@ -140,6 +169,57 @@ export default function ThreeDFencing() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    setPageUrl(window.location.href);
+  }, []);
+
+  const handleLeadSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setFormError('');
+    setFormStatus('sending');
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const name = String(formData.get('name') || '').trim();
+    const phone = String(formData.get('phone') || '').trim();
+    const email = String(formData.get('email') || '').trim();
+    const service = String(formData.get('service') || '').trim();
+    const message = String(formData.get('message') || '').trim();
+    const honeypot = String(formData.get('website') || '').trim();
+
+    if (honeypot) {
+      form.reset();
+      setFormStatus('success');
+      return;
+    }
+
+    if (!name || !phone || !email || !service) {
+      setFormStatus('error');
+      setFormError('Please provide your name, phone, email, and service needed.');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/lead', {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' },
+      });
+      const payload = await response.json().catch(() => null);
+      if (!response.ok || !payload?.ok) {
+        setFormStatus('error');
+        setFormError(payload?.error || 'Something went wrong. Please try again.');
+        return;
+      }
+
+      form.reset();
+      setFormStatus('success');
+    } catch (error) {
+      setFormStatus('error');
+      setFormError('Something went wrong. Please try again.');
+    }
+  };
+
   const navLinks = [
     { label: 'Services', href: '#services' },
     { label: 'Why Us', href: '#why-us' },
@@ -155,17 +235,42 @@ export default function ThreeDFencing() {
     'Fully insured for your peace of mind',
   ];
   const recentJobs = [
-    { title: 'Cedar Privacy Fence', meta: 'Houston  -  2 days', result: '300ft with rot bond', image: '/images/project-cedar.png' },
-    { title: 'Custom Wrought Iron Gate', meta: 'Katy  -  1 week', result: 'Fabricated & Installed', image: '/images/project-gate-2.png' },
-    { title: 'LiftMaster Operator Install', meta: 'The Woodlands  -  4 hours', result: 'Solar powered system', image: '/images/project-liftmaster.png' },
+    { title: 'Cedar Privacy Fence', meta: 'Houston  -  2 days', result: '300ft with rot board for maximum durability', image: '/images/project-cedar.png', alt: 'New cedar privacy fence installation in Houston' },
+    { title: 'Custom Wrought Iron Gate', meta: 'Katy  -  1 week', result: 'Custom fabricated & professionally installed', image: '/images/project-gate-2.png', alt: 'Custom wrought iron driveway gate in Katy' },
+    { title: 'LiftMaster Operator Install', meta: 'The Woodlands  -  4 hours', result: 'Solar powered automatic gate system', image: '/images/project-liftmaster.png', alt: 'LiftMaster automatic gate opener installation in The Woodlands' },
   ];
 
   const allServices = [
-    { name: config.primaryService, image: '/images/service-fence.png' },
-    { name: config.services[0], image: '/images/service-gate.png' }, // Driveway Gates
-    { name: config.services[1], image: '/images/service-access.png' }, // Access Control
-    { name: config.services[2], image: '/images/service-welding.png' }, // Welding
-    { name: config.services[3], image: '/images/service-repair.png' }, // Repair
+    {
+      name: config.primaryService,
+      image: '/images/service-fence.png',
+      desc: 'Expert installation of cedar, chain link, and iron fencing for Houston homes and businesses. We build durable, secure, and beautiful boundaries.',
+      alt: 'Professional fence installation services'
+    },
+    {
+      name: config.services[0],
+      image: '/images/service-gate.png',
+      desc: 'Custom-built driveway gates designed for security and curb appeal. Available in wrought iron, wood, and modern metal styles.',
+      alt: 'Custom driveway gate fabrication'
+    },
+    {
+      name: config.services[1],
+      image: '/images/service-access.png',
+      desc: 'Professional installation of LiftMaster electric gate openers and smart access control systems for seamless entry.',
+      alt: 'Automatic gate opener installation'
+    },
+    {
+      name: config.services[2],
+      image: '/images/comm.JPG',
+      desc: 'Mobile welding and shop fabrication for custom gates, railings, and structural repairs. High-quality craftsmanship on every weld.',
+      alt: 'Professional welding and fabrication services'
+    },
+    {
+      name: config.services[3],
+      image: '/images/fence_repair.JPG',
+      desc: 'Fast, reliable repair services for leaning fences, broken gates, and malfunctioning openers to keep your property secure.',
+      alt: 'Fence and gate repair services'
+    },
   ];
 
   const steps = [
@@ -185,18 +290,16 @@ export default function ThreeDFencing() {
           HEADER - Transparent over hero, solid on scroll
       ═══════════════════════════════════════════════════════════════════════ */}
       <nav
-        className="sticky top-0 z-50 transition-all duration-300"
+        className="fixed top-0 w-full z-50 transition-all duration-300"
         style={{
           backgroundColor: scrolled ? `${t.cardBg}f8` : 'transparent',
           backdropFilter: scrolled ? 'blur(12px)' : 'none',
           borderBottom: scrolled ? `1px solid ${t.border}` : 'none',
         }}
       >
-        <div className={`${shellClass} flex items-center justify-between py-4`}>
-          <a href="#" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center text-white font-black text-lg" style={{ backgroundColor: accent }}>
-              {config.businessName.charAt(0)}
-            </div>
+        <div className={`${shellClass} flex items-center justify-between py-2`}>
+          <a href="#" className="flex items-center">
+            <img src="/images/reallogo.svg" alt={config.businessName} className="h-20 w-auto object-contain -my-3 -mr-10 translate-y-2" />
             <div>
               <span className="text-lg font-bold uppercase tracking-tight" style={{ color: scrolled ? t.textPrimary : 'white' }}>{config.businessName}</span>
               <div className="text-[10px] font-semibold uppercase tracking-widest" style={{ color: scrolled ? t.textMuted : 'rgba(255,255,255,0.7)' }}>Open 24 Hours</div>
@@ -254,7 +357,7 @@ export default function ThreeDFencing() {
                   {config.businessName}
                 </h1>
                 <p className="text-xl font-bold uppercase tracking-wider" style={{ color: accent }}>
-                  Fences, Gates & Custom Welding
+                  Professional Fence Installation & Custom Gate Fabrication
                 </p>
                 <p className="text-lg leading-relaxed text-slate-300 max-w-lg">
                   Fast response. Quick scheduling. High-quality craftsmanship.<br />
@@ -284,15 +387,30 @@ export default function ThreeDFencing() {
                 <ShieldCheck className="h-5 w-5 text-emerald-500" />
               </div>
               <p className="text-sm text-slate-500 mb-6 font-medium">No obligation. 100% Secure.</p>
-              <div className="space-y-4">
+              <form className="space-y-4" action="/api/lead" method="POST" onSubmit={handleLeadSubmit}>
+                <input type="text" name="website" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" aria-hidden="true" />
+                <input type="hidden" name="page" value={pageUrl} />
                 <div className="grid grid-cols-2 gap-4">
-                  <div><label className="block text-xs font-semibold text-slate-700 mb-1">Name *</label><input type="text" placeholder="Your Name" className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900" /></div>
-                  <div><label className="block text-xs font-semibold text-slate-700 mb-1">Phone *</label><input type="tel" placeholder="(281) 555-0123" className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900" /></div>
+                  <div><label className="block text-xs font-semibold text-slate-700 mb-1">Name *</label><input required name="name" type="text" placeholder="Your Name" className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900" /></div>
+                  <div><label className="block text-xs font-semibold text-slate-700 mb-1">Phone *</label><input required name="phone" type="tel" placeholder="(281) 555-0123" className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900" /></div>
                 </div>
-                <div><label className="block text-xs font-semibold text-slate-700 mb-1">Service Needed</label><select className="w-full rounded-lg border border-slate-200 px-4 py-3 text-sm bg-white text-slate-900"><option>Select a service...</option>{[config.primaryService, ...services].map(s => <option key={s}>{s}</option>)}</select></div>
-                <div><label className="block text-xs font-semibold text-slate-700 mb-1">Project Details</label><textarea rows={3} placeholder="Describe your project (e.g. 50ft cedar fence)..." className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 resize-none" /></div>
-                <button type="button" onClick={scrollToQuote} className="w-full rounded-lg py-4 text-base font-bold text-white shadow-lg" style={{ backgroundColor: accent }}>Request Free Estimate</button>
-              </div>
+                <div><label className="block text-xs font-semibold text-slate-700 mb-1">Email *</label><input required name="email" type="email" placeholder="you@email.com" className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900" /></div>
+                <div><label className="block text-xs font-semibold text-slate-700 mb-1">Service Needed *</label><select required name="service" className="w-full rounded-lg border border-slate-200 px-4 py-3 text-sm bg-white text-slate-900"><option value="">Select a service...</option>{[config.primaryService, ...services].map(s => <option key={s} value={s}>{s}</option>)}</select></div>
+                <div><label className="block text-xs font-semibold text-slate-700 mb-1">Project Details</label><textarea name="message" rows={3} placeholder="Describe your project (e.g. 50ft cedar fence)..." className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 resize-none" /></div>
+                <button type="submit" disabled={formStatus === 'sending'} className="w-full rounded-lg py-4 text-base font-bold text-white shadow-lg disabled:opacity-70" style={{ backgroundColor: accent }}>
+                  {formStatus === 'sending' ? 'Sending...' : 'Request Free Estimate'}
+                </button>
+                {formStatus === 'success' && (
+                  <div role="status" className="rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-700">
+                    Thanks! We received your request and will reach out shortly.
+                  </div>
+                )}
+                {formStatus === 'error' && (
+                  <div role="alert" className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">
+                    {formError || 'Something went wrong. Please try again.'}
+                  </div>
+                )}
+              </form>
               <div className="mt-6 flex items-center justify-center gap-3 pt-4 border-t border-slate-100">
                 <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" /><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853" /><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05" /><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335" /></svg>
                 <div className="flex">{[1, 2, 3, 4, 5].map(n => <Star key={n} className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />)}</div>
@@ -309,7 +427,7 @@ export default function ThreeDFencing() {
             {config.testimonials.concat(config.testimonials).map((review, i) => (
               <div key={i} className="mx-8 flex items-center gap-3">
                 <div className="flex">{[1, 2, 3, 4, 5].map(n => <Star key={n} className="h-3 w-3 fill-yellow-400 text-yellow-400 drop-shadow-sm" />)}</div>
-                <span className="text-sm font-medium text-white drop-shadow-md">"{review.quote.substring(0, 60)}{review.quote.length > 60 ? '...' : ''}"</span>
+                <span className="text-sm font-medium text-white drop-shadow-md">"{review.highlight || review.quote}"</span>
                 <span className="text-sm text-white/90 font-medium drop-shadow-md">- {review.name}</span>
               </div>
             ))}
@@ -332,7 +450,7 @@ export default function ThreeDFencing() {
                 <div className="h-1 w-8" style={{ backgroundColor: accent }} />
                 <p className="text-xs font-bold uppercase tracking-widest" style={{ color: t.textMuted }}>Our Capabilities</p>
               </div>
-              <h2 className="text-4xl font-black uppercase tracking-tight" style={{ color: t.textPrimary }}>Member of the Family</h2>
+              <h2 className="text-4xl font-black uppercase tracking-tight" style={{ color: t.textPrimary }}>Professional Fence & Gate Services in {config.city}</h2>
             </div>
             <p className="text-sm font-medium font-mono border-l-2 pl-4 py-1 max-w-sm" style={{ color: t.textSecondary, borderColor: accent }}>
               Full licensed professionals serving {config.city}.<br />Same-week availability for new clients.
@@ -343,7 +461,7 @@ export default function ThreeDFencing() {
               <motion.div key={service.name} className="group flex flex-col justify-between overflow-hidden shadow-sm transition-all hover:shadow-xl hover:-translate-y-1" style={{ backgroundColor: t.cardBg, border: `1px solid ${t.border}` }}>
                 {/* Service Image Area */}
                 <div className="aspect-[16/9] w-full relative bg-slate-100 flex items-center justify-center overflow-hidden">
-                  <img src={service.image} alt={service.name} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <img src={service.image} alt={service.alt} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
 
                   {/* Overlay title */}
                   <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
@@ -354,7 +472,7 @@ export default function ThreeDFencing() {
                 <div className="p-6 flex flex-col gap-4 flex-1">
                   <div>
                     <h3 className="text-lg font-black uppercase mb-2 leading-tight" style={{ color: t.textPrimary }}>{service.name}</h3>
-                    <p className="text-sm leading-relaxed" style={{ color: t.textSecondary }}>Professional solutions tailored to your needs. Top-quality materials and installation offering security and curb appeal.</p>
+                    <p className="text-sm leading-relaxed" style={{ color: t.textSecondary }}>{service.desc}</p>
                   </div>
 
                   <div className="mt-auto pt-4 border-t" style={{ borderColor: t.border }}>
@@ -477,7 +595,7 @@ export default function ThreeDFencing() {
             {recentJobs.map((job, i) => (
               <div key={job.title} className="snap-center shrink-0 w-[85vw] md:w-auto flex flex-col group relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all">
                 <div className="aspect-[4/3] relative bg-slate-100 flex items-center justify-center overflow-hidden">
-                  <img src={job.image} alt={job.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <img src={job.image} alt={job.alt} className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
                   <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
                     <span className="text-white font-bold text-sm flex items-center gap-2"><Check className="h-4 w-4" style={{ color: accent }} /> Verified Job</span>
                   </div>
@@ -501,11 +619,11 @@ export default function ThreeDFencing() {
         <div className={`${shellClass} relative z-10`}>
           <div className="flex flex-col items-center justify-center text-center mb-16">
             <div className="flex items-center gap-3 mb-4 bg-white/10 backdrop-blur-md px-6 py-3 rounded-full border border-white/10">
-              <GoogleLogo className="h-6 w-6" />
+              <GoogleLogo className="h-5 w-5" />
               <div className="flex gap-1">
                 {[1, 2, 3, 4, 5].map(n => <Star key={n} className="h-5 w-5 fill-yellow-400 text-yellow-400" />)}
               </div>
-              <span className="text-white font-bold ml-2">{ratingText}/5</span>
+              <span className="text-white font-bold ml-1.5 pt-0.5">{ratingText}</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight mb-4">Client Reviews</h2>
             <p className="text-slate-400 text-lg max-w-2xl">See what your neighbors in {config.city} are saying about our work.</p>
@@ -547,10 +665,10 @@ export default function ThreeDFencing() {
           </div>
 
           <div className="mt-16 text-center">
-            <button className="inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-900 rounded-lg font-black uppercase tracking-wide hover:scale-105 transition-transform shadow-lg">
+            <a href="https://share.google/ZKEcTBNdQ3BLhJSDe" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 px-8 py-4 bg-white text-slate-900 rounded-lg font-black uppercase tracking-wide hover:scale-105 transition-transform shadow-lg">
               <GoogleLogo className="h-5 w-5" />
-              Read all {reviewCount} reviews
-            </button>
+              Read all reviews
+            </a>
           </div>
         </div>
       </section>
@@ -646,10 +764,10 @@ export default function ThreeDFencing() {
         <div className={`${shellClass} flex flex-col gap-3 md:flex-row md:items-center md:justify-between`}>
           <div className="flex flex-col gap-1 md:flex-row md:items-center md:gap-4">
             <span className="font-semibold" style={{ color: t.textPrimary }}>{config.businessName}</span>
-            <span>{config.city} | {config.phone}</span>
-            <span>Open 24 Hours</span>
+            <span>Serving Houston, Katy, The Woodlands & More</span>
+            <span>Open 24/7 | (281) 748-1111</span>
           </div>
-          <a href="/" className="flex items-center gap-1.5 text-[10px] opacity-60 hover:opacity-100 transition-opacity">
+          <a href="https://quicklaunchweb.us" className="flex items-center gap-1.5 text-[10px] opacity-60 hover:opacity-100 transition-opacity">
             <span>Website by</span>
             <span className="font-bold" style={{ color: accent }}>QuickLaunchWeb</span>
           </a>
