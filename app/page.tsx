@@ -422,7 +422,7 @@ export default function EliteHomeRepairs() {
         </div>
         <div className="absolute inset-0" style={{ background: 'linear-gradient(90deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.75) 100%)' }} />
 
-        <div className={`${shellClass} relative z-10 py-12 lg:py-0 flex-1 lg:flex lg:items-center`}>
+        <div className={`${shellClass} relative z-10 pt-32 pb-12 lg:py-0 flex-1 lg:flex lg:items-center`}>
           <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center w-full pb-20 lg:pb-0">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
               {/* Top Rated Badge */}
