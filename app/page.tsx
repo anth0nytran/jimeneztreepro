@@ -5,8 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, ShieldCheck, Star, Menu, X, Award, Clock, Check, ClipboardList, Hammer, ArrowRight } from 'lucide-react';
 import NextImage from 'next/image';
 
-import { ComparisonSlider } from './components/ComparisonSlider';
-import { ImagePlaceholder } from './components/ImagePlaceholder';
+import { ProjectCard } from './components/ProjectCard';
 
 // Inline configuration for standalone usage
 const config = {
@@ -342,10 +341,6 @@ export default function EliteHomeRepairs() {
     return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
   };
 
-  // Lightbox State
-  const [selectedJob, setSelectedJob] = useState<typeof recentJobs[0] | null>(null);
-  const [activeImage, setActiveImage] = useState<string>('');
-
   // Smooth scroll to the quote form in the hero section
   const scrollToQuote = () => {
     const quoteSection = document.getElementById('quote-form');
@@ -431,11 +426,51 @@ export default function EliteHomeRepairs() {
     'Fully insured for your peace of mind',
   ];
   const recentJobs = [
-    { title: 'Full Home Siding Replacement', meta: 'Kingwood  -  5 Days', result: 'Hardie plank installation for lasting durability', image: '/images/project-cedar.webp', alt: 'Hardie plank siding replacement' },
-    { title: 'Roof Repair & Shingle Match', meta: 'Humble  -  1 Day', result: 'Seamless repair after storm damage', image: '/images/project-gate.webp', alt: 'Roof shingle repair' },
-    { title: 'Exterior Painting Refresh', meta: 'The Woodlands  -  3 Days', result: 'Complete exterior repaint with premium weather-proof paint', image: '/images/project-gate-2.webp', alt: 'Exterior home painting' },
-    { title: 'Energy Efficient Windows', meta: 'Spring  -  2 Days', result: 'Double-pane window installation', image: '/images/project-liftmaster.webp', alt: 'New energy efficient windows' },
-    { title: 'Custom Patio Remodel', meta: 'Atascocita  -  1 Week', result: 'Covered patio addition with custom lighting', image: '/images/project-gate.webp', image2: '/images/project-gate-2.webp', alt: 'Custom patio remodel' },
+    {
+      title: 'Full Roof Replacement',
+      location: 'Kingwood',
+      duration: '2 Days',
+      result: 'Seamless repair after storm damage',
+      beforeImage: '/images/project_showcase/before_1.png',
+      afterImage: '/images/project_showcase/after_1.png',
+      alt: 'Roof shingle repair'
+    },
+    {
+      title: 'Exterior Painting Refresh',
+      location: 'The Woodlands',
+      duration: '3 Days',
+      result: 'Complete exterior repaint with premium weather-proof paint',
+      beforeImage: '/images/project_showcase/before_2.png',
+      afterImage: '/images/project_showcase/after_2.png',
+      alt: 'Exterior home painting'
+    },
+    {
+      title: 'Energy Efficient Windows',
+      location: 'Spring',
+      duration: '2 Days',
+      result: 'Double-pane window installation',
+      beforeImage: '/images/project_showcase/before_3.png',
+      afterImage: '/images/project_showcase/after_3.png',
+      alt: 'New energy efficient windows'
+    },
+    {
+      title: 'Custom Patio Remodel',
+      location: 'Atascocita',
+      duration: '1 Week',
+      result: 'Covered patio addition with custom lighting',
+      beforeImage: '/images/project_showcase/before_4.png',
+      afterImage: '/images/project_showcase/after_5.png',
+      alt: 'Custom patio remodel'
+    },
+    {
+      title: 'Siding Renovation',
+      location: 'Humble',
+      duration: '4 Days',
+      result: 'Complete siding replacement and weatherproofing',
+      beforeImage: '/images/project_showcase/before_5.png',
+      afterImage: '/images/project_showcase/after_4.png',
+      alt: 'Siding renovation'
+    },
   ];
 
   const allServices = [
@@ -866,7 +901,7 @@ export default function EliteHomeRepairs() {
           <div className="flex items-center justify-between mb-12">
             <div>
               <p className="text-xs font-bold uppercase tracking-widest mb-1 opacity-60" style={{ color: t.textPrimary }}>Our Portfolio</p>
-              <h2 className="text-4xl font-black md:text-5xl" style={{ color: t.textPrimary }}>Recent Projects</h2>
+              <h2 className="text-4xl font-black md:text-5xl" style={{ color: t.textPrimary }}>Project Showcase</h2>
             </div>
 
             <div className="hidden md:flex gap-2">
@@ -876,28 +911,14 @@ export default function EliteHomeRepairs() {
           </div>
 
           {/* Snap Scroll Container - Optimized with Next.js Image */}
-          <div className="flex overflow-x-auto pb-8 -mx-4 px-4 gap-8 snap-x md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible">
+          <div className="flex overflow-x-auto pb-8 -mx-4 px-4 gap-8 snap-x md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible">
             {recentJobs.map((job) => (
-              <div
+              <ProjectCard
                 key={job.title}
-                className="snap-center shrink-0 w-[85vw] md:w-auto flex flex-col group relative rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2"
-              >
-                <div className="aspect-[3/2] relative bg-slate-100 flex items-center justify-center overflow-hidden">
-                  <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-                    <span className="text-8xl font-black leading-none text-slate-300">?</span>
-                  </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-slate-900/75 to-transparent opacity-100 transition-opacity">
-                    <span className="text-white font-bold text-sm flex items-center gap-2">
-                      Photo coming soon
-                    </span>
-                  </div>
-                </div>
-                <div className="p-6 bg-white flex-1 border-t-0 flex flex-col justify-center">
-                  <div className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-1">{job.meta.split('-')[0]}</div>
-                  <h3 className="text-xl font-black text-slate-900 mb-2 leading-tight group-hover:text-orange-600 transition-colors">{job.title}</h3>
-                  <p className="text-sm text-slate-600 line-clamp-2">{job.result}</p>
-                </div>
-              </div>
+                {...job}
+                accentColor={accent}
+                actionColor={action}
+              />
             ))}
           </div>
         </div>
@@ -907,8 +928,8 @@ export default function EliteHomeRepairs() {
       <section id="proof" className="relative py-24 overflow-hidden" style={{ borderTop: `4px solid ${accent}`, borderBottom: `4px solid ${accent}` }}>
         <div className="absolute inset-0" aria-hidden="true">
           <NextImage
-            src="/images/reviews-bg.webp"
-            alt=""
+            src="/images/reviews_background.png"
+            alt="Luxury home exterior background"
             fill
             sizes="100vw"
             className="object-cover"
@@ -1212,111 +1233,7 @@ export default function EliteHomeRepairs() {
       </div>
 
       {/* Lightbox Modal - Optimized */}
-      <AnimatePresence>
-        {selectedJob && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center px-4 bg-slate-900/90" // Removed expensive backdrop-blur
-            onClick={() => setSelectedJob(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-5xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col md:flex-row"
-            >
-              <button
-                onClick={() => setSelectedJob(null)}
-                className="absolute top-4 right-4 z-50 p-2 bg-white/80 backdrop-blur text-slate-900 rounded-full hover:bg-slate-100 transition-colors shadow-sm"
-              >
-                <X className="h-5 w-5" />
-              </button>
 
-              {/* Image Side - Optimized */}
-              <div className="w-full md:w-[65%] bg-slate-100 flex flex-col items-center justify-center relative min-h-[40vh] md:min-h-[80vh] overflow-hidden">
-                {/* Main Image */}
-                <div className="relative w-full h-full p-4">
-                  <NextImage
-                    key={activeImage}
-                    src={activeImage || selectedJob.image}
-                    alt={selectedJob.alt}
-                    fill
-                    className="object-contain p-4"
-                    sizes="(max-width: 768px) 100vw, 65vw"
-                    priority // Priority loading for the main image
-                  />
-                </div>
-
-                {/* If there's a second image, show thumbnails */}
-                {'image2' in selectedJob && selectedJob.image2 && (
-                  <div className="absolute bottom-4 left-4 right-4 flex gap-2 justify-center z-20">
-                    <div className="flex gap-2 bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-lg">
-                      {/* Front View Thumb */}
-                      <div
-                        onClick={(e) => { e.stopPropagation(); setActiveImage(selectedJob.image); }}
-                        className={`cursor-pointer rounded overflow-hidden relative w-24 h-16 transition-all ${activeImage === selectedJob.image ? 'ring-2 ring-amber-500 opacity-100' : 'opacity-60 hover:opacity-100'}`}
-                      >
-                        <NextImage src={selectedJob.image} alt="Front view" fill className="object-cover" sizes="100px" />
-                      </div>
-
-                      {/* Back View Thumb */}
-                      <div
-                        onClick={(e) => { e.stopPropagation(); setActiveImage(selectedJob.image2 as string); }}
-                        className={`cursor-pointer rounded overflow-hidden relative w-24 h-16 transition-all ${activeImage === selectedJob.image2 ? 'ring-2 ring-amber-500 opacity-100' : 'opacity-60 hover:opacity-100'}`}
-                      >
-                        <NextImage src={selectedJob.image2} alt="Back view" fill className="object-cover" sizes="100px" />
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Info Side */}
-              <div className="w-full md:w-[35%] p-8 flex flex-col justify-center bg-white">
-                <div className="inline-flex items-center gap-2 mb-4">
-                  <div className="h-0.5 w-6" style={{ backgroundColor: accent }} />
-                  <span className="text-xs font-bold uppercase tracking-widest text-slate-500">Verified Project</span>
-                </div>
-
-                <h3 className="text-2xl md:text-3xl font-black uppercase leading-tight mb-4 text-slate-900">{selectedJob.title}</h3>
-                <p className="text-sm font-medium text-slate-500 mb-8 leading-relaxed">{selectedJob.alt}</p>
-
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-2 rounded bg-slate-50"><Clock className="h-5 w-5 text-slate-400" /></div>
-                    <div>
-                      <span className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Timeline</span>
-                      <span className="text-base font-bold text-slate-900">{selectedJob.meta.split('-').pop()?.trim()}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="p-2 rounded bg-slate-50"><Check className="h-5 w-5 text-slate-400" /></div>
-                    <div>
-                      <span className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Result</span>
-                      <span className="text-base font-bold text-slate-900">{selectedJob.result}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-8 pt-8 border-t border-slate-100">
-                  <button
-                    onClick={() => { setSelectedJob(null); scrollToQuote(); }}
-                    className="w-full py-4 text-white font-bold uppercase tracking-wide rounded-lg shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
-                    style={{ backgroundColor: accent }}
-                  >
-                    Get a Similar Quote
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
     </div>
   );

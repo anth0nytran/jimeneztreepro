@@ -135,6 +135,18 @@ export default function RootLayout({
             })
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "Elite Home Repairs",
+              "alternateName": ["Elite Home Repairs Kingwood", "EliteHomeRepairs.us"],
+              "url": "https://elitehomerepairs.us"
+            })
+          }}
+        />
         {gaId ? (
           <>
             <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
@@ -159,6 +171,6 @@ export default function RootLayout({
       >
         {children}
       </body>
-    </html>
+    </html >
   );
 }
