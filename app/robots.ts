@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: '*',
             allow: '/',
-            disallow: '/private/',
+            disallow: '/api/',
         },
-        sitemap: 'https://elitehomerepairs.us/sitemap.xml',
+        sitemap: 'https://jimeneztreepro.com/sitemap.xml',
     };
 }

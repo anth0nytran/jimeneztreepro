@@ -24,39 +24,38 @@ const monoFont = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://elitehomerepairs.us'),
-  title: "Home Repair Contractor in Kingwood, TX | Elite Home Repairs",
-  description: "Helping homeowners in Kingwood, Humble, The Woodlands, Spring, Atascocita, and Houston with siding, roofing, painting, and window repairs. Licensed, insured, and free estimates.",
+  metadataBase: new URL('https://jimeneztreepro.com'),
+  title: "Tree Service in Pasadena & Houston, TX | Jimenez Tree Pro",
+  description: "Tree removal, tree trimming, stump grinding, and storm damage cleanup for homeowners in Pasadena, Houston, Pearland, Friendswood, League City, and Clear Lake. 24/7 emergency service and free estimates.",
   alternates: {
     canonical: '/',
   },
-  keywords: ["Home Repairs Kingwood", "Siding Installation", "Roofing Contractor", "Painting Services", "Window Replacement", "Elite Home Repairs", "Houston Home Remodeling"],
   openGraph: {
-    title: "Kingwood Home Repair Services for Homeowners | Elite Home Repairs",
-    description: "Trusted siding, roofing, painting, and window repairs for homeowners in Kingwood and nearby service areas. Call for a free estimate.",
-    url: 'https://elitehomerepairs.us',
-    siteName: 'Elite Home Repairs',
+    title: "Professional Tree Service for Houston Area Homeowners | Jimenez Tree Pro",
+    description: "Done right. Done safely. Done today. Emergency tree removal, large tree trimming, stump grinding, and storm cleanup. Call for a free estimate.",
+    url: 'https://jimeneztreepro.com',
+    siteName: 'Jimenez Tree Pro',
     locale: 'en_US',
     type: 'website',
     images: [
       {
-        url: '/images/hero-bg.webp',
+        url: '/tree_pro/og-tree.jpg',
         width: 1200,
         height: 630,
-        alt: 'Elite Home Repairs - Premium Craftsmanship',
+        alt: 'Jimenez Tree Pro - Professional Tree Service',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Kingwood Home Repair Services | Elite Home Repairs",
-    description: "Helping homeowners protect and improve their homes with siding, roofing, painting, and window services.",
-    images: ['/images/hero-bg.webp'],
+    title: "Tree Service in Pasadena & Houston | Jimenez Tree Pro",
+    description: "24/7 emergency tree service. Tree removal, tree trimming, stump grinding, and storm cleanup for Houston area homeowners.",
+    images: ['/tree_pro/og-tree.jpg'],
   },
   icons: {
-    icon: '/icon.png',
-    shortcut: '/icon.png',
-    apple: '/icon.png',
+    icon: '/tree_pro/tree_logo.svg',
+    shortcut: '/tree_pro/tree_logo.svg',
+    apple: '/tree_pro/tree_logo.svg',
   },
 };
 
@@ -77,59 +76,47 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              "name": "Elite Home Repairs",
-              "image": "https://elitehomerepairs.us/images/hero-bg.webp",
-              "@id": "https://elitehomerepairs.us",
-              "url": "https://elitehomerepairs.us",
-              "telephone": "+17132838138",
-              "description": "Home repair services for homeowners in Kingwood and surrounding Houston areas. Siding, roofing, painting, and windows.",
+              "name": "Jimenez Tree Pro",
+              "image": "https://jimeneztreepro.com/tree_pro/og-tree.jpg",
+              "@id": "https://jimeneztreepro.com",
+              "url": "https://jimeneztreepro.com",
+              "telephone": "+18329667045",
+              "description": "Professional tree removal, trimming, and storm damage cleanup for homeowners in Pasadena and surrounding Houston areas. 24/7 emergency service.",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "4102 Valley Haven Dr",
-                "addressLocality": "Kingwood",
+                "addressLocality": "Pasadena",
                 "addressRegion": "TX",
-                "postalCode": "77339",
                 "addressCountry": "US"
               },
               "geo": {
                 "@type": "GeoCoordinates",
-                "latitude": 30.0166, // Kingwood coords
-                "longitude": -95.1803
+                "latitude": 29.6911,
+                "longitude": -95.2091
               },
               "areaServed": [
-                { "@type": "City", "name": "Kingwood" },
-                { "@type": "City", "name": "Humble" },
-                { "@type": "City", "name": "The Woodlands" },
+                { "@type": "City", "name": "Pasadena" },
                 { "@type": "City", "name": "Houston" },
-                { "@type": "City", "name": "Spring" },
-                { "@type": "City", "name": "Atascocita" },
-                { "@type": "City", "name": "Porter" },
-                { "@type": "City", "name": "Conroe" },
-                { "@type": "City", "name": "Tomball" },
-                { "@type": "City", "name": "Katy" },
-                { "@type": "City", "name": "Sugar Land" },
-                { "@type": "City", "name": "Cypress" }
+                { "@type": "City", "name": "Alvin" },
+                { "@type": "City", "name": "Pearland" },
+                { "@type": "City", "name": "Friendswood" },
+                { "@type": "City", "name": "League City" },
+                { "@type": "City", "name": "Clear Lake" }
               ],
               "openingHoursSpecification": {
                 "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-                "opens": "07:00",
-                "closes": "20:00"
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+                "opens": "00:00",
+                "closes": "23:59"
               },
               "priceRange": "$$",
-              "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "5.0",
-                "reviewCount": "50"
-              },
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
-                "name": "Home Repair Services",
+                "name": "Tree Services",
                 "itemListElement": [
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Siding Installation" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Roofing Services" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Painting" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Window Replacement" } }
+                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Emergency & Large Tree Removal" } },
+                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Large Tree Trimming & Structural Pruning" } },
+                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Storm Damage Cleanup & Debris Hauling" } },
+                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Stump Grinding" } }
                 ]
               }
             })
@@ -141,9 +128,9 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              "name": "Elite Home Repairs",
-              "alternateName": ["Elite Home Repairs Kingwood", "EliteHomeRepairs.us"],
-              "url": "https://elitehomerepairs.us"
+              "name": "Jimenez Tree Pro",
+              "alternateName": ["Jimenez Tree Pro Pasadena", "JimenezTreePro.com"],
+              "url": "https://jimeneztreepro.com"
             })
           }}
         />

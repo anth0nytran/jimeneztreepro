@@ -193,11 +193,11 @@ export async function POST(req: Request) {
   }).format(new Date());
   const safeName = name || 'Website Form';
   const safeService = service || 'Website Form';
-  const brandName = 'Elite Home Repairs';
-  const brandAddress = '4102 Valley Haven Dr, Kingwood, TX 77339';
-  const brandPrimary = '#1e3a8a';
+  const brandName = 'Jimenez Tree Pro';
+  const brandAddress = 'Pasadena, TX';
+  const brandPrimary = '#166534';
   const brandAccent = '#ea580c';
-  const fromEmail = process.env.LEAD_FROM_EMAIL || 'Elite Home Repairs <leads@quicklaunchweb.us>';
+  const fromEmail = process.env.LEAD_FROM_EMAIL || 'Jimenez Tree Pro <leads@quicklaunchweb.us>';
   const subject = `New Lead: ${safeService} | ${safeName}`;
 
   const pageUrlIsDev =
@@ -311,7 +311,7 @@ export async function POST(req: Request) {
       <tr>
         <td style="padding:0 20px 22px;">
           <div style="border-left:4px solid ${brandAccent};padding:12px;background:#f8fafc;border-radius:8px;font-size:12px;color:#475569;line-height:1.5;">
-            This lead came from the Elite Home Repairs website form.
+            This lead came from the Jimenez Tree Pro website form.
             <span style="display:block;margin-top:6px;font-weight:700;color:${brandPrimary};">${brandAddress}</span>
           </div>
         </td>

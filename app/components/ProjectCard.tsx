@@ -8,8 +8,8 @@ import { ArrowLeftRight } from 'lucide-react';
 interface ProjectCardProps {
     title: string;
     location: string;
-    beforeImage: string;
-    afterImage: string;
+    beforeImage?: string;
+    afterImage?: string;
     alt: string;
     accentColor: string;
     actionColor: string;
@@ -32,13 +32,19 @@ export function ProjectCard({
             <div className="aspect-[4/3] relative bg-slate-100 overflow-hidden">
                 {/* Before Image - Always present, essentially the "background" */}
                 <div className="absolute inset-0">
-                    <NextImage
-                        src={beforeImage}
-                        alt={`Before - ${alt}`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                    />
+                    {beforeImage ? (
+                        <NextImage
+                            src={beforeImage}
+                            alt={`Before - ${alt}`}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                    ) : (
+                        <div className="w-full h-full bg-slate-100 flex items-center justify-center">
+                            <span className="text-slate-300 text-6xl font-black opacity-50 select-none">?</span>
+                        </div>
+                    )}
                 </div>
 
                 {/* After Image - Layered on top, toggles opacity */}
@@ -46,13 +52,19 @@ export function ProjectCard({
                     className="absolute inset-0 transition-opacity duration-500 ease-in-out"
                     style={{ opacity: showAfter ? 1 : 0 }}
                 >
-                    <NextImage
-                        src={afterImage}
-                        alt={`After - ${alt}`}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                    />
+                    {afterImage ? (
+                        <NextImage
+                            src={afterImage}
+                            alt={`After - ${alt}`}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                    ) : (
+                        <div className="w-full h-full bg-slate-100 flex items-center justify-center">
+                            <span className="text-slate-300 text-6xl font-black opacity-50 select-none">?</span>
+                        </div>
+                    )}
                 </div>
 
                 {/* Overlay Gradient */}

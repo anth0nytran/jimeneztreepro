@@ -13,28 +13,88 @@
   --font-display: var(--font-app-display);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-app-body), "Segoe UI", sans-serif;
 }
 
-.elite-site h1,
-.elite-site h2,
-.elite-site h3,
-.elite-site h4,
-.elite-site h5,
-.elite-site h6,
-.elite-site .font-black,
-.elite-site .font-extrabold,
-.elite-site .brand-display,
-.elite-site .uppercase {
+.jimenez-site h1,
+.jimenez-site h2,
+.jimenez-site h3,
+.jimenez-site h4,
+.jimenez-site h5,
+.jimenez-site h6,
+.jimenez-site .font-black,
+.jimenez-site .font-extrabold,
+.jimenez-site .brand-display,
+.jimenez-site .uppercase {
   font-family: var(--font-app-display), "Arial Narrow", sans-serif;
+}
+
+/* ═══════════════════════════════════════════
+   MARQUEE
+═══════════════════════════════════════════ */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* ═══════════════════════════════════════════
+   NOISE TEXTURE OVERLAY
+═══════════════════════════════════════════ */
+.noise-overlay {
+  position: relative;
+}
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  z-index: 1;
+}
+
+/* ═══════════════════════════════════════════
+   FAQ ACCORDION
+═══════════════════════════════════════════ */
+details summary {
+  list-style: none;
+}
+details summary::-webkit-details-marker {
+  display: none;
+}
+details[open] > *:not(summary) {
+  animation: faqReveal 0.3s ease-out;
+}
+@keyframes faqReveal {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════
+   CARD GLOW HOVER
+═══════════════════════════════════════════ */
+.card-glow {
+  transition: box-shadow 0.4s ease, transform 0.3s ease;
+}
+.card-glow:hover {
+  box-shadow: 0 0 30px rgba(234, 88, 12, 0.1), 0 8px 32px rgba(0, 0, 0, 0.25);
+  transform: translateY(-4px);
+}
+
+/* ═══════════════════════════════════════════
+   ORGANIC SECTION TRANSITIONS
+═══════════════════════════════════════════ */
+.section-dark {
+  background-color: #0c1220;
+}
+.section-warm {
+  background-color: #faf8f5;
 }

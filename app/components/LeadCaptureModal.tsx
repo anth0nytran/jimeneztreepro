@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { CheckCircle2, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 // Mock hooks since lib/analytics is missing
-const useFormTracker = (a: string, b: string) => ({
+const useFormTracker = (_a: string, _b: string) => ({
     trackFormStart: () => { },
     trackFormSubmit: () => { }
 });
@@ -34,12 +34,10 @@ export function LeadCaptureModal({
     const [submitted, setSubmitted] = useState(false);
     const { trackFormStart, trackFormSubmit } = useFormTracker('lead_capture', 'demo');
     const { trackLeadCaptured } = useDemoTracker();
-
-    useEffect(() => {
-        if (!open) {
-            setSubmitted(false);
-        }
-    }, [open]);
+    const closeModal = () => {
+        setSubmitted(false);
+        onOpenChange(false);
+    };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -56,7 +54,7 @@ export function LeadCaptureModal({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        onClick={() => onOpenChange(false)}
+                        onClick={closeModal}
                         className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
                     />
                     <motion.div
@@ -71,7 +69,7 @@ export function LeadCaptureModal({
                                 <h2 className="text-xl font-black uppercase tracking-tight text-slate-900">{ctaLabel}</h2>
                                 <p className="text-xs font-semibold uppercase tracking-wider text-slate-400 mt-1">Requesting {serviceLabel} with {businessName}</p>
                             </div>
-                            <button onClick={() => onOpenChange(false)} className="rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors">
+                            <button onClick={closeModal} className="rounded-full p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition-colors">
                                 <X className="h-5 w-5" />
                             </button>
                         </div>
@@ -89,7 +87,7 @@ export function LeadCaptureModal({
                                     </p>
                                     <button
                                         type="button"
-                                        onClick={() => onOpenChange(false)}
+                                        onClick={closeModal}
                                         className="mt-6 w-full rounded-lg py-3 text-sm font-bold text-emerald-700 hover:bg-emerald-100 transition-colors"
                                     >
                                         Close
