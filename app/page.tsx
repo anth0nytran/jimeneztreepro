@@ -400,69 +400,109 @@ export default function JimenezTreeProPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-          HEADER - Transparent over hero, solid on scroll
-      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-      <nav
-        className="fixed top-0 w-full z-50 transition-all duration-300"
-        style={{
-          backgroundColor: scrolled ? `${t.cardBg}f8` : 'transparent',
-          backdropFilter: scrolled ? 'blur(12px)' : 'none',
-          borderBottom: scrolled ? `1px solid ${t.border}` : 'none',
-        }}
-      >
-        <div className={`${shellClass} flex items-center justify-between py-2`}>
-          <a href="#top" className="flex items-center gap-2 md:gap-3">
-            <NextImage
-              src="/tree_pro/tree_logo.svg"
-              alt={config.businessName}
-              width={220}
-              height={64}
-              priority
-              unoptimized
-              className="h-16 w-auto object-contain"
-            />
-            <div>
-              <div className="brand-display text-lg font-black uppercase tracking-tight leading-none">
-                <span style={{ color: scrolled ? accent : 'white' }}>JIMENEZ</span>
-                <span className="ml-1.5" style={{ color: scrolled ? action : 'white' }}>TREE PRO</span>
-              </div>
-              <div className="text-[10px] font-bold uppercase tracking-widest mt-0.5" style={{ color: scrolled ? t.textMuted : 'rgba(255,255,255,0.7)' }}>24/7 Emergency Service</div>
+      {/* â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• 
+          HEADER - Sticky Announcement Bar + Nav
+      â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â• â•  */}
+      <header className="fixed top-0 w-full z-50 flex flex-col font-sans transition-all duration-300">
+
+        {/* Scrolling Announcement Bar */}
+        <div className="relative overflow-hidden py-2.5" style={{ backgroundColor: '#dc2626' }}>
+          <div className="flex animate-marquee whitespace-nowrap">
+            {/* Content Container 1 */}
+            <div className="flex items-center gap-16 px-8">
+              {[...Array(2)].flatMap(() => [
+                `24/7 EMERGENCY TREE SERVICES AVAILABLE`,
+                `HAZARDOUS LIMB REMOVAL`,
+                `CALL (281) 924-7955 FOR IMMEDIATE ASSISTANCE`,
+                `STORM DAMAGE CLEANUP TEAM STANDING BY`,
+                `DO NOT RISK YOUR SAFETY - LET THE PROS HANDLE IT`
+              ]).map((text, i) => (
+                <div key={i} className="flex items-center gap-3 text-[13px] font-black uppercase tracking-widest text-white">
+                  <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                  <span>{text}</span>
+                </div>
+              ))}
             </div>
-          </a>
-
-          <div className="hidden items-center gap-8 md:flex">
-            {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="text-sm font-semibold transition-colors" style={{ color: scrolled ? t.textSecondary : 'rgba(255,255,255,0.85)' }}>{link.label}</a>
-            ))}
+            {/* Content Container 2 (Duplicate for loop) */}
+            <div className="flex items-center gap-16 px-8">
+              {[...Array(2)].flatMap(() => [
+                `⚠️ 24/7 EMERGENCY TREE SERVICES AVAILABLE`,
+                `HAZARDOUS LIMB REMOVAL`,
+                `CALL (281) 924-7955 FOR IMMEDIATE ASSISTANCE`,
+                `STORM DAMAGE CLEANUP TEAM STANDING BY`,
+                `DO NOT RISK YOUR SAFETY - LET THE PROS HANDLE IT`
+              ]).map((text, i) => (
+                <div key={`dup-${i}`} className="flex items-center gap-3 text-[13px] font-black uppercase tracking-widest text-white">
+                  <span className="w-1.5 h-1.5 rounded-full bg-white/40" />
+                  <span>{text}</span>
+                </div>
+              ))}
+            </div>
           </div>
-
-          <div className="hidden items-center gap-4 md:flex">
-            <a href={`tel:${cleanPhone}`} className="flex items-center gap-2 text-sm font-bold" style={{ color: scrolled ? t.textPrimary : 'white' }}><Phone className="h-4 w-4" />{config.phone}</a>
-            <button onClick={scrollToQuote} className="px-5 py-2.5 text-sm font-bold text-white rounded transition-colors hover:shadow-lg hover:brightness-110" style={{ backgroundColor: action }}>{config.ctaPrimary}</button>
-          </div>
-
-          <button className="md:hidden" style={{ color: scrolled ? t.textPrimary : 'white' }} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
         </div>
 
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }} className="overflow-hidden border-t px-6 py-4" style={{ backgroundColor: t.cardBg, borderColor: t.border }}>
-              <div className="flex flex-col gap-3">
-                {navLinks.map(l => <a key={l.href} href={l.href} className="py-2 font-semibold" style={{ color: t.textPrimary }} onClick={() => setMobileMenuOpen(false)}>{l.label}</a>)}
-                <button onClick={() => { scrollToQuote(); setMobileMenuOpen(false); }} className="mt-2 py-3 text-white font-bold rounded hover:brightness-110" style={{ backgroundColor: action }}>{config.ctaPrimary}</button>
+        {/* Navigation */}
+        <nav
+          className="w-full transition-all duration-300"
+          style={{
+            backgroundColor: scrolled ? `${t.cardBg}f8` : 'transparent',
+            backdropFilter: scrolled ? 'blur(12px)' : 'none',
+            borderBottom: scrolled ? `1px solid ${t.border}` : 'none',
+          }}
+        >
+          <div className={`${shellClass} flex items-center justify-between py-2`}>
+            <a href="#top" className="flex items-center gap-2 md:gap-3">
+              <NextImage
+                src="/tree_pro/tree_logo.svg"
+                alt={config.businessName}
+                width={220}
+                height={64}
+                priority
+                unoptimized
+                className="h-16 w-auto object-contain"
+              />
+              <div>
+                <div className="brand-display text-lg font-black uppercase tracking-tight leading-none">
+                  <span style={{ color: scrolled ? accent : 'white' }}>JIMENEZ</span>
+                  <span className="ml-1.5" style={{ color: scrolled ? action : 'white' }}>TREE PRO</span>
+                </div>
+                <div className="text-[10px] font-bold uppercase tracking-widest mt-0.5" style={{ color: scrolled ? t.textMuted : 'rgba(255,255,255,0.7)' }}>24/7 Emergency Service</div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </nav>
+            </a>
+
+            <div className="hidden items-center gap-8 md:flex">
+              {navLinks.map((link) => (
+                <a key={link.href} href={link.href} className="text-sm font-semibold transition-colors" style={{ color: scrolled ? t.textSecondary : 'rgba(255,255,255,0.85)' }}>{link.label}</a>
+              ))}
+            </div>
+
+            <div className="hidden items-center gap-4 md:flex">
+              <a href={`tel:${cleanPhone}`} className="flex items-center gap-2 text-sm font-bold" style={{ color: scrolled ? t.textPrimary : 'white' }}><Phone className="h-4 w-4" />{config.phone}</a>
+              <button onClick={scrollToQuote} className="px-5 py-2.5 text-sm font-bold text-white rounded transition-colors hover:shadow-lg hover:brightness-110" style={{ backgroundColor: action }}>{config.ctaPrimary}</button>
+            </div>
+
+            <button className="md:hidden" style={{ color: scrolled ? t.textPrimary : 'white' }} onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
+
+          <AnimatePresence>
+            {mobileMenuOpen && (
+              <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} exit={{ height: 0 }} className="overflow-hidden border-t px-6 py-4" style={{ backgroundColor: t.cardBg, borderColor: t.border }}>
+                <div className="flex flex-col gap-3">
+                  {navLinks.map(l => <a key={l.href} href={l.href} className="py-2 font-semibold" style={{ color: t.textPrimary }} onClick={() => setMobileMenuOpen(false)}>{l.label}</a>)}
+                  <button onClick={() => { scrollToQuote(); setMobileMenuOpen(false); }} className="mt-2 py-3 text-white font-bold rounded hover:brightness-110" style={{ backgroundColor: action }}>{config.ctaPrimary}</button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </nav>
+      </header>
 
       {/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
           HERO - Full Background with Quote Form
-      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
-      <section className="relative min-h-[105vh] flex flex-col overflow-hidden -mt-[72px] pt-[72px]" style={{ minHeight: '108vh' }}>
+      â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */}
+      <section className="relative min-h-[105vh] flex flex-col overflow-hidden -mt-[72px] pt-[120px]" style={{ minHeight: '108vh' }}>
         {/* Changed background to something more fence/construction related or generic structure */}
         <div className="absolute inset-0" aria-hidden="true">
           <NextImage
