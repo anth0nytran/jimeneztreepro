@@ -709,7 +709,7 @@ export default function JimenezTreeProPage() {
           {/* Need Help Choosing - Accent Section */}
           <div className="mt-10 rounded-2xl p-8 md:p-10 shadow-xl relative overflow-hidden" style={{ backgroundColor: accent }}>
             {/* Texture overlay */}
-            <div className="absolute inset-0 opacity-10 bg-[url('/tree_pro/noise.png')] mix-blend-overlay" />
+            <div className="absolute inset-0 bg-black/5 mix-blend-overlay" />
 
             <div className="relative z-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div>
