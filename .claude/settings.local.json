@@ -3,5 +3,9 @@
     "allow": [
       "Bash(npx next dev:*)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "n8n-mcp"
+  ],
+  "enableAllProjectMcpServers": true
 }

@@ -65,27 +65,47 @@ const config = {
 
   testimonials: [
     {
-      quote: "Jimenez Tree Pro removed a massive oak that was threatening our foundation. Professional crew, fair price, and they left our yard spotless. Can't recommend them enough!",
-      name: 'Maria G.',
-      highlight: 'They left our yard spotless',
-      reviewCount: 4,
-      localGuide: true,
-      photos: 3,
+      quote: "Jimenez Tree Service did an amazing job trimming my tree. I highly recommend them for their detail and care.",
+      name: "Violetta Negrete",
+      highlight: "Amazing job trimming my tree",
+      reviewCount: 1,
+      localGuide: false,
+      photos: 1,
     },
     {
-      quote: "Called them after a storm knocked a huge branch onto our fence. They were out the next morning and had everything cleaned up by noon. Incredible response time.",
-      name: 'David R.',
-      highlight: 'Incredible response time',
+      quote: "Jimenez Tree Services are very professional. I was quoted a great price, they were on time, and they did an awesome job. I would definitely hire them again in the future.",
+      name: "Joycelyn Rodriguez Sanes",
+      highlight: "Quoted a great price",
+      reviewCount: 3,
+      localGuide: false,
+    },
+    {
+      quote: "They did an amazing job with my tree removal and stump grinding. The crew was on time, professional, and left everything super clean. I also had them trim my other trees and they look great! Highly recommend.",
+      name: "Isury Watson",
+      highlight: "Left everything super clean",
+      reviewCount: 1,
+      localGuide: false,
+    },
+    {
+      quote: "Jimenez's services really did an extraordinary job for me. I can sincerely recommend them for their excellent work and professionalism.",
+      name: "Patricia Rodriguez",
+      highlight: "Extraordinary job",
+      reviewCount: 1,
+      localGuide: false,
+    },
+    {
+      quote: "Jimenez Tree Service takes care of all our properties. Highly recommend their consistent quality.",
+      name: "Christopher Celona",
+      highlight: "High recommend",
       reviewCount: 2,
       localGuide: false,
     },
     {
-      quote: "We've used Jimenez for tree trimming twice now. They shape our trees beautifully and always clean up after. Very professional and reasonably priced.",
-      name: 'Sandra L.',
-      highlight: 'Very professional and reasonably priced',
-      reviewCount: 5,
-      localGuide: true,
-      photos: 8,
+      quote: "I'm so impressed with Jimenez Tree Service. I highly recommend them to anyone needing reliable tree work.",
+      name: "Jimenez Electrical",
+      highlight: "Impressed with Jimenez Tree Service",
+      reviewCount: 2,
+      localGuide: false,
     },
   ],
 
@@ -158,13 +178,6 @@ export default function JimenezTreeProPage() {
   const [formTimestamp] = useState(() => Date.now().toString());
   const [phoneValue, setPhoneValue] = useState('');
   const pageUrl = typeof window !== 'undefined' ? window.location.href : '';
-  const [reviewPage, setReviewPage] = useState(0);
-  const reviewsPerPage = 6;
-  const totalReviewPages = Math.ceil(config.testimonials.length / reviewsPerPage);
-
-  const nextReviewPage = () => setReviewPage((p) => (p + 1) % totalReviewPages);
-  const prevReviewPage = () => setReviewPage((p) => (p - 1 + totalReviewPages) % totalReviewPages);
-
   // Format phone as (XXX) XXX-XXXX
   const formatPhone = (value: string) => {
     const digits = value.replace(/\D/g, '').slice(0, 10);
@@ -281,7 +294,7 @@ export default function JimenezTreeProPage() {
   const allServices = [
     {
       name: 'Emergency & Large Tree Removal',
-      image: '/tree_pro/service-emergency.webp',
+      image: '/tree_pro/emergency_service.png',
       desc: 'Safe removal for hazardous, dead, storm-damaged, and overgrown trees near homes, fences, roofs, and driveways.',
       bestFor: 'Leaning trees, split trunks, root-lifted trees, and immediate safety risks.',
       bullets: [
@@ -294,7 +307,7 @@ export default function JimenezTreeProPage() {
     },
     {
       name: 'Large Tree Trimming & Structural Pruning',
-      image: '/tree_pro/service-trimming.webp',
+      image: '/tree_pro/large_tree_Service.png',
       desc: 'Professional pruning that improves tree health, reduces storm risk, and keeps branches clear of structures and power lines.',
       bestFor: 'Overhanging limbs, canopy balancing, deadwood removal, and long-term tree health.',
       bullets: [
@@ -307,7 +320,7 @@ export default function JimenezTreeProPage() {
     },
     {
       name: 'Storm Damage Cleanup & Debris Hauling',
-      image: '/tree_pro/service-storm.webp',
+      image: '/tree_pro/storm_cleanup.png',
       desc: 'Fast cleanup for fallen trees, broken limbs, and storm debris so your property is safe, accessible, and secure again.',
       bestFor: 'Post-storm hazards, blocked driveways, fence damage, and urgent cleanup.',
       bullets: [
@@ -320,7 +333,7 @@ export default function JimenezTreeProPage() {
     },
     {
       name: 'Stump Grinding',
-      image: '/tree_pro/home_3.png',
+      image: '/tree_pro/stump repair.png',
       desc: 'We grind stumps below grade so you can reclaim yard space, remove tripping hazards, and prep for landscaping.',
       bestFor: 'Leftover stumps after removals, lawn restoration, and new landscape projects.',
       bullets: [
@@ -527,7 +540,7 @@ export default function JimenezTreeProPage() {
 
               {/* Headline */}
               <div className="space-y-4">
-                <h1 className="text-5xl font-black leading-[1.05] tracking-normal text-white md:text-6xl lg:text-7xl uppercase">
+                <h1 className="text-4xl font-black leading-[1.05] tracking-normal text-white md:text-5xl lg:text-6xl uppercase">
                   Tree Service in Pasadena & Houston, TX
                 </h1>
                 <p className="text-xl font-bold uppercase tracking-widest" style={{ color: action }}>
@@ -777,7 +790,7 @@ export default function JimenezTreeProPage() {
       <section id="why-us" className="relative scroll-mt-20 py-28 overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0" aria-hidden="true">
-          <NextImage src="/tree_pro/home_2.png" alt="" fill sizes="100vw" className="object-cover" />
+          <NextImage src="/tree_pro/trust_us.png" alt="" fill sizes="100vw" className="object-cover" />
         </div>
         <div className="absolute inset-0 bg-black/75" />
 
@@ -860,9 +873,9 @@ export default function JimenezTreeProPage() {
       <section className="py-10 relative z-20" style={{ backgroundColor: accent }}>
         <div className={shellClass}>
           <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-center">
-            <ShieldCheck className="h-8 w-8 text-white/90" />
-            <p className="text-xl md:text-2xl font-black text-white uppercase tracking-tight max-w-3xl">
-              If you aren&apos;t completely satisfied with our craftsmanship, we will make it right. <span className="opacity-80 border-b-2 border-white/50">No exceptions.</span>
+            <ShieldCheck className="h-10 w-10 text-white shrink-0" />
+            <p className="text-xl md:text-2xl font-black text-white uppercase tracking-tight leading-none">
+              If you aren&apos;t completely satisfied with our craftsmanship, we will make it right. No exceptions.
             </p>
           </div>
         </div>
@@ -943,8 +956,13 @@ export default function JimenezTreeProPage() {
       {/* Reviews Section */}
       <section id="proof" className="relative py-24 overflow-hidden" style={{ borderTop: `4px solid ${accent}`, borderBottom: `4px solid ${accent}` }}>
         <div className="absolute inset-0" aria-hidden="true">
-          {/* Dark background for reviews */}
-          <div className="absolute inset-0 bg-slate-950" />
+          <NextImage
+            src="/tree_pro/home_1.png"
+            alt="Customer Reviews Background"
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
         </div>
         <div className="absolute inset-0 bg-black/80" />
 
@@ -962,48 +980,35 @@ export default function JimenezTreeProPage() {
           </div>
 
           <div className="relative">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={reviewPage}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-                className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-              >
-                {config.testimonials.slice(reviewPage * reviewsPerPage, (reviewPage + 1) * reviewsPerPage).map((testimonial, idx) => (
-                  <div key={`${testimonial.name}-${idx}`} className="flex flex-col h-[22rem] bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 rounded-xl shadow-2xl border-t-4 hover:-translate-y-1 transition-transform duration-300 border-x border-b border-white/5 relative group" style={{ borderTopColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335'][idx % 4] }}>
-                    <div className="absolute inset-0 bg-gradient-to-br from-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl pointer-events-none" />
-                    <div className="flex items-start justify-between mb-4 relative z-10">
-                      <div className="flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-full flex items-center justify-center font-bold text-white text-lg shadow-lg" style={{ backgroundColor: ['#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#8B5CF6'][idx % 5] }}>
-                          {testimonial.name.charAt(0)}
-                        </div>
-                        <div>
-                          <div className="font-bold text-white text-sm">{testimonial.name}</div>
-                          <div className="text-xs text-white/60">
-                            {testimonial.localGuide && 'Local Guide ΓÇó '}
-                            {testimonial.reviewCount || 1} reviews
-                          </div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {config.testimonials.map((testimonial, idx) => (
+                <div key={`${testimonial.name}-${idx}`} className="flex flex-col h-[22rem] bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md p-6 rounded-xl shadow-2xl border-t-4 hover:-translate-y-1 transition-transform duration-300 border-x border-b border-white/5 relative group" style={{ borderTopColor: ['#4285F4', '#34A853', '#FBBC05', '#EA4335'][idx % 4] }}>
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl pointer-events-none" />
+                  <div className="flex items-start justify-between mb-4 relative z-10">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-full flex items-center justify-center font-bold text-white text-lg shadow-lg" style={{ backgroundColor: ['#EF4444', '#F59E0B', '#10B981', '#3B82F6', '#8B5CF6'][idx % 5] }}>
+                        {testimonial.name.charAt(0)}
+                      </div>
+                      <div>
+                        <div className="font-bold text-white text-sm">{testimonial.name}</div>
+                        <div className="text-xs text-white/60">
+                          {testimonial.localGuide && 'Local Guide • '}
+                          {testimonial.reviewCount || 1} reviews
                         </div>
                       </div>
-                      <GoogleLogo className="h-5 w-5 opacity-80" />
                     </div>
-                    <div className="flex gap-1 mb-3 relative z-10">
-                      {[0, 1, 2, 3, 4].map(i => (
-                        <Star key={i} className="h-4 w-4 drop-shadow-sm text-[#FBBC05] fill-[#FBBC05]" />
-                      ))}
-                    </div>
-                    <p className="text-sm text-slate-200 leading-relaxed mb-4 font-medium relative z-10 line-clamp-6">
-                      &ldquo;{testimonial.quote}&rdquo;
-                    </p>
+                    <GoogleLogo className="h-5 w-5 opacity-80" />
                   </div>
-                ))}
-              </motion.div>
-            </AnimatePresence>
-            <div className="flex justify-center mt-8 gap-4">
-              <button onClick={prevReviewPage} className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"><ArrowRight className="h-6 w-6 rotate-180" /></button>
-              <button onClick={nextReviewPage} className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"><ArrowRight className="h-6 w-6" /></button>
+                  <div className="flex gap-1 mb-3 relative z-10">
+                    {[0, 1, 2, 3, 4].map(i => (
+                      <Star key={i} className="h-4 w-4 drop-shadow-sm text-[#FBBC05] fill-[#FBBC05]" />
+                    ))}
+                  </div>
+                  <p className="text-sm text-slate-200 leading-relaxed mb-4 font-medium relative z-10 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-white/20 hover:scrollbar-thumb-white/40">
+                    &ldquo;{testimonial.quote}&rdquo;
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -1165,7 +1170,7 @@ export default function JimenezTreeProPage() {
                 </button>
               </div>
               <p className="mt-4 text-center text-[10px] uppercase tracking-wide text-slate-600 font-bold">
-                Mon-Sat 7AM - 8PM
+                24/7 Service
               </p>
             </div>
 
