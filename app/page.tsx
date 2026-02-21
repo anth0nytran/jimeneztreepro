@@ -213,7 +213,8 @@ export default function JimenezTreeProPage() {
     const formData = new FormData(form);
     const name = String(formData.get('name') || '').trim();
     const phone = String(formData.get('phone') || '').trim();
-    const email = String(formData.get('email') || '').trim();
+    const address = String(formData.get('address') || '').trim();
+    const zipCode = String(formData.get('zipCode') || '').trim();
     const service = String(formData.get('service') || '').trim();
     const message = String(formData.get('message') || '').trim();
     const honeypot = String(formData.get('website') || '').trim();
@@ -225,9 +226,9 @@ export default function JimenezTreeProPage() {
       return;
     }
 
-    if (!name || !phone || !email || !service) {
+    if (!name || !phone || !address || !zipCode || !service) {
       setFormStatus('error');
-      setFormError('Please provide your name, phone, email, and service needed.');
+      setFormError('Please provide your name, phone, address, zip code, and service needed.');
       return;
     }
 
@@ -269,25 +270,34 @@ export default function JimenezTreeProPage() {
   ];
   const recentJobs = [
     {
-      title: 'Large Oak Removal',
+      title: 'Precision Tree Trimming',
       location: 'Pasadena',
-      duration: '1 Day',
-      result: 'Safely removed a 50-foot oak threatening the foundation',
-      alt: 'Large oak tree removal'
+      beforeImage: '/tree_pro/gallery/2.jpg',
+      alt: 'Precision Tree Trimming'
     },
     {
-      title: 'Storm Damage Cleanup',
+      title: 'Safe Tree Pruning',
+      location: 'Houston',
+      beforeImage: '/tree_pro/gallery/3.jpg',
+      alt: 'Safe Tree Pruning'
+    },
+    {
+      title: 'Hazardous Tree Removal',
       location: 'Pearland',
-      duration: '2 Days',
-      result: 'Emergency removal of storm-damaged trees and debris',
-      alt: 'Storm damage tree cleanup'
+      beforeImage: '/tree_pro/gallery/4.jpg',
+      alt: 'Hazardous Tree Removal'
     },
     {
-      title: 'Tree Trimming & Shaping',
+      title: 'Residential Tree Care',
       location: 'League City',
-      duration: '1 Day',
-      result: 'Professional trimming and canopy shaping for curb appeal',
-      alt: 'Professional tree trimming'
+      beforeImage: '/tree_pro/gallery/5.jpg',
+      alt: 'Residential Tree Care'
+    },
+    {
+      title: 'Hurricane Tree Preparation',
+      location: 'Deer Park',
+      beforeImage: '/tree_pro/gallery/hurricane prep.jpg',
+      alt: 'Hurricane Tree Preparation'
     },
   ];
 
@@ -612,17 +622,29 @@ export default function JimenezTreeProPage() {
                     />
                   </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Email *</label>
-                  <input
-                    required
-                    name="email"
-                    type="email"
-                    placeholder="you@email.com"
-                    pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$"
-                    title="Please enter a valid email address"
-                    className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 invalid:border-red-300 focus:invalid:border-red-400"
-                  />
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">Address *</label>
+                    <input
+                      required
+                      name="address"
+                      type="text"
+                      placeholder="Street Address"
+                      className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 invalid:border-red-300 focus:invalid:border-red-400"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-slate-700 mb-1">Zip Code *</label>
+                    <input
+                      required
+                      name="zipCode"
+                      type="text"
+                      placeholder="e.g. 77502"
+                      pattern="\d{5}"
+                      title="Please enter a valid 5-digit zip code"
+                      className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 invalid:border-red-300 focus:invalid:border-red-400"
+                    />
+                  </div>
                 </div>
                 <div><label className="block text-xs font-semibold text-slate-700 mb-1">Service Needed *</label><select required name="service" className="w-full rounded-lg border border-slate-200 px-4 py-3 text-sm bg-white text-slate-900"><option value="">Select a service...</option>{[config.primaryService, ...services].map(s => <option key={s} value={s}>{s}</option>)}</select></div>
                 <div><label className="block text-xs font-semibold text-slate-700 mb-1">Project Details</label><textarea name="message" rows={3} placeholder="Describe your project (e.g. Tree removal, storm damage cleanup...)" className="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 resize-none" /></div>

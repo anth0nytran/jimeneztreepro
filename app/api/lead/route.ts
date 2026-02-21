@@ -90,16 +90,17 @@ export async function POST(req: Request) {
 
   const name = pickField(data, ['name', 'fullName', 'fullname']);
   const phone = pickField(data, ['phone', 'phoneNumber', 'phone_number', 'tel']);
-  const email = pickField(data, ['email', 'emailAddress', 'email_address']);
+  const address = pickField(data, ['address', 'streetAddress']);
+  const zipCode = pickField(data, ['zipCode', 'zip_code', 'zip']);
   const message = pickField(data, ['message', 'details', 'notes']);
   const company = pickField(data, ['company', 'companyName', 'company_name']);
   const service = pickField(data, ['service', 'serviceNeeded', 'service_needed']);
   const page = pickField(data, ['page', 'pageUrl', 'page_url']);
   const site = pickField(data, ['site', 'siteUrl', 'site_url']);
 
-  if (!name || !phone || !email || !service) {
+  if (!name || !phone || !address || !zipCode || !service) {
     return NextResponse.json(
-      { ok: false, error: 'Please provide your name, phone, email, and service needed.' },
+      { ok: false, error: 'Please provide your name, phone, address, zip code, and service needed.' },
       { status: 400 }
     );
   }
@@ -121,10 +122,10 @@ export async function POST(req: Request) {
     );
   }
 
-  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  if (!emailPattern.test(email)) {
+  const zipPattern = /^\d{5}$/;
+  if (!zipPattern.test(zipCode)) {
     return NextResponse.json(
-      { ok: false, error: 'Please enter a valid email address.' },
+      { ok: false, error: 'Please enter a valid 5-digit zip code.' },
       { status: 400 }
     );
   }
@@ -137,7 +138,7 @@ export async function POST(req: Request) {
   }
 
   // 3. Content filtering - detect spam patterns
-  const combinedText = `${name} ${email} ${message}`.toLowerCase();
+  const combinedText = `${name} ${address} ${zipCode} ${message}`.toLowerCase();
 
   // 3a. Check for excessive URLs (more than 2 is suspicious)
   const urlPattern = /https?:\/\/|www\./gi;
@@ -220,7 +221,8 @@ export async function POST(req: Request) {
     `Timestamp: ${timestamp}`,
     name ? `Name: ${name}` : '',
     phone ? `Phone: ${phone}` : '',
-    email ? `Email: ${email}` : '',
+    address ? `Address: ${address}` : '',
+    zipCode ? `Zip Code: ${zipCode}` : '',
     company ? `Company: ${company}` : '',
     service ? `Service: ${service}` : '',
     pageUrlDisplay ? `Page: ${pageUrlDisplay}` : '',
@@ -265,11 +267,7 @@ export async function POST(req: Request) {
                 </a>
               </td>
             </tr>
-            <tr>
-              <td style="padding:0 0 10px;">
-                <a href="mailto:${escapeHtml(email)}" style="display:block;background:${brandPrimary};color:#ffffff;text-decoration:none;font-weight:700;font-size:14px;text-align:center;padding:14px 18px;border-radius:10px;">Email Lead</a>
-              </td>
-            </tr>
+
             ${pageUrlDisplay ? `
             <tr>
               <td style="padding:0;">
@@ -291,7 +289,8 @@ export async function POST(req: Request) {
                 <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="font-size:14px;">
                   <tr><td style="padding:10px 0;color:#64748b;width:120px;">Name</td><td style="padding:10px 0;color:#0f172a;font-weight:700;">${escapeHtml(safeName)}</td></tr>
                   <tr><td style="padding:10px 0;color:#64748b;">Phone</td><td style="padding:10px 0;"><a href="tel:${escapeHtml(phoneLink || phone)}" style="color:#0f172a;text-decoration:none;font-weight:700;">${escapeHtml(phone)}</a></td></tr>
-                  <tr><td style="padding:10px 0;color:#64748b;">Email</td><td style="padding:10px 0;"><a href="mailto:${escapeHtml(email)}" style="color:#0f172a;text-decoration:none;font-weight:700;">${escapeHtml(email)}</a></td></tr>
+                  <tr><td style="padding:10px 0;color:#64748b;">Address</td><td style="padding:10px 0;color:#0f172a;font-weight:700;">${escapeHtml(address)}</td></tr>
+                  <tr><td style="padding:10px 0;color:#64748b;">Zip Code</td><td style="padding:10px 0;color:#0f172a;font-weight:700;">${escapeHtml(zipCode)}</td></tr>
                   <tr><td style="padding:10px 0;color:#64748b;">Service</td><td style="padding:10px 0;color:#0f172a;font-weight:700;">${escapeHtml(safeService)}</td></tr>
                   ${pageUrlDisplay ? `<tr><td style="padding:10px 0;color:#64748b;">Page URL</td><td style="padding:10px 0;"><a href="${escapeHtml(page)}" style="color:${brandAccent};text-decoration:none;">${escapeHtml(pageUrlDisplay)}</a></td></tr>` : ''}
                   ${site ? `<tr><td style="padding:10px 0;color:#64748b;">Site</td><td style="padding:10px 0;"><a href="${escapeHtml(site)}" style="color:${brandAccent};text-decoration:none;">${escapeHtml(site)}</a></td></tr>` : ''}
@@ -360,7 +359,7 @@ export async function POST(req: Request) {
     from: fromEmail,
     to: [toEmail],
     bcc,
-    replyTo: email || undefined,
+    replyTo: undefined,
     subject,
     text,
     html,
